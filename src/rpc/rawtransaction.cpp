@@ -780,7 +780,8 @@ UniValue createrawtransaction(const UniValue& params, bool fHelp)
         LogPrintf("hello %s\n", name_);
         cout << "destination: " << name_ << endl;
         if (name_ == "data") {
-            std::vector<unsigned char> data = ParseHexV(sendTo[name_].getValStr(), "Data");
+            std::string rawData = sendTo[name_].getValStr();
+            std::vector<unsigned char> data(rawData.begin(), rawData.end());
 
             CTxOut out(0, CScript() << OP_RETURN << data);
             rawTx.vout.push_back(out);
